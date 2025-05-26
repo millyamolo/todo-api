@@ -6,9 +6,14 @@ pipeline {
     stage('Install Dependencies') {
       steps { sh 'npm install' }
     }
-    stage('Run Tests') {
-      steps { sh 'npm test' }
-    }
+   stage('Run Tests') {
+  steps {
+    echo 'Making mocha binary executable…'
+    sh 'chmod +x node_modules/.bin/mocha'
+    echo 'Running tests…'
+    sh 'npm test'
+  }
+}
     stage('Code Quality') {
       steps { sh 'npm run lint' }
     }
