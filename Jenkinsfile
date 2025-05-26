@@ -1,6 +1,10 @@
 pipeline {
-  agent any
-
+  agent {
+    docker {
+      image 'node:18'        // Node.js 18.x LTS image
+      args  '-u root:root'   // run as root so npm can write node_modules
+    }
+  }
   stages {
     stage('Install Dependencies') {
       steps {
