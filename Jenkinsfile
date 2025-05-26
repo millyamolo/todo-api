@@ -1,6 +1,8 @@
 pipeline {
   agent any
-
+tools {
+        nodejs "node-18" // Must match the name you gave it in Jenkins
+    }
   stages {
     stage('Build') {
       steps {
