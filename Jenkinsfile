@@ -1,40 +1,38 @@
 pipeline {
   agent any
-tools {
-        nodejs "node-18" // Must match the name you gave it in Jenkins
-    }
+
   stages {
     stage('Build') {
       steps {
         echo 'Building the app...'
-        sh 'npm install'
+        bat 'npm install'
       }
     }
 
     stage('Test') {
       steps {
         echo 'Running tests...'
-        sh 'npm test'
+        bat 'npm test'
       }
     }
     stage('Code Quality') {
   steps {
     echo 'Running JSHint for code quality analysis...'
-    sh 'npm run lint'
+    bat 'npm run lint'
   }
 }
 stage('Security') {
   steps {
     echo 'Running npm audit for security analysis...'
-    sh 'npm run audit'
+    bat 'npm run audit'
   }
 }
 stage('Deploy') {
   steps {
     echo 'Deploying Docker container...'
-    sh 'docker rm -f todo-api-container || true'
-  sh 'docker build -t todo-api .'
-  sh 'docker run -d -p 3000:3000 --name todo-api-container todo-api'
+    bat 'docker rm -f todo-api-container || true'
+    bat 'docker build -t todo-api .'
+    bat 'docker run -d -p 3000:3000 --name todo-api-container todo-api'
   }
 }
 
